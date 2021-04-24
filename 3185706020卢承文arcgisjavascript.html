@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <title>Intro to MapView - Create a 2D map | Sample | ArcGIS API for JavaScript 4.18</title>
+    <style>
+      html,body{
+            margin:0;
+            height:100%;
+            width:100%;
+            padding:0;
+             }
+           #title {
+        padding: 0;
+        margin: 0;   
+        width: 100%;
+        height: 5%;
+        text-align:center;
+        background-color:yellow;
+
+      }
+ #viewDiv {
+        padding: 0;
+        margin: 0;
+        width: 80%;
+        height: 95%;
+        float:left;
+      }
+      
+  
+      #baseGallery {
+        padding: 0;
+        margin: 0;
+        width: 20%;
+        height: 95%;
+        float:left;
+      }
+    </style>
+
+    <link rel="stylesheet" href="https://js.arcgis.com/4.18/esri/themes/light/main.css" />
+    <script src="https://js.arcgis.com/4.18/"></script>
+
+    <script>
+        require(["esri/Map", "esri/views/MapView","esri/layers/FeatureLayer",
+       "esri/widgets/Legend","esri/widgets/ScaleBar","esri/widgets/Search","esri/widgets/LayerList"
+        ,"esri/widgets/BasemapGallery"],
+       (Map, MapView,FeatureLayer,Legend,ScaleBar,Search,LayerList,BasemapGallery) => {
+        var flayer = new FeatureLayer({
+  // URL to the service
+  url: "https://www.arcgisonline.cn/server/rest/services/Hosted/CN_34Capital_Population20210421/FeatureServer"
+});
+        var basemaps = [];
+        const map = new Map({
+          basemap: "topo-vector"
+        });
+        const map1 = new Map({
+            basemap: "streets"  
+        });
+        const map2 = new Map({
+            basemap: "hybrid"  
+        });
+        const map3 = new Map({
+            basemap: "national-geographic" 
+        });
+
+      map.layers.add(flayer);
+        const view = new MapView({
+          container: "viewDiv",
+          map: map,
+          zoom: 4,
+          center: [120,21] // longitude, latitude
+        });
+        var legend = new Legend({
+            view: view,
+            layerInfos: [{
+                layer: flayer,
+                title: "Legend"
+            }]
+        });
+
+        view.ui.add(legend, "bottom-right");
+        var scaleBar = new ScaleBar({
+            view: view,
+            style:"ruler",
+            unit:"dual"
+        });
+        // Add widget to the bottom left corner of the view
+        view.ui.add(scaleBar, {
+            position: "bottom-left"
+        });
+
+        const searchWidget = new Search({
+            view: view
+        });
+        // Adds the search widget below other elements in
+        // the top left corner of the view
+        view.ui.add(searchWidget, {
+            position: "top-left",
+            index: 2
+        });
+        var layerList = new LayerList({
+            view: view
+        });
+        // Adds widget below other elements in the top left corner of the view
+        view.ui.add(layerList, {
+            position: "top-left"
+        });
+
+
+
+       
+        var basemapGallery = new BasemapGallery({
+            view: view,
+            container: "baseGallery"
+        });
+        // Add widget to the top right corner of the view
+       
+
+
+        });
+
+    </script>
+  </head>
+
+  <body>   
+    <div id="title">
+      3185706020lcw
+    </div>
+    <div id="viewDiv"></div>
+
+   <div id="baseGallery"></div>  
+    
+  </body>
+</html>
+
